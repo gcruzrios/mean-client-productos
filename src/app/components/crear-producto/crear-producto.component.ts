@@ -40,15 +40,32 @@ export class CrearProductoComponent implements OnInit {
       ubicacion: this.productoForm.get('ubicacion')?.value,
       precio: this.productoForm.get('precio')?.value,
     }
+    
+    if(this.id !== null){
+      //editar producto
 
-    console.log(PRODUCTO);
-    this._productoService.guardarProducto(PRODUCTO).subscribe(data => {
-      this.toastr.success('El producto fue registrado con exito!', 'Producto Registrado!');
-      this.router.navigate(['/']);
-    }, error => {
-      console.log(error);
-      this.productoForm.reset();
-    })
+        this._productoService.actualizarProducto(this.id, PRODUCTO).subscribe(data => {
+        this.toastr.info('El producto fue actualizado con exito!', 'Producto Actualizado!');
+        this.router.navigate(['/']);
+      }, error => {
+        console.log(error);
+        this.productoForm.reset();
+      })
+
+    }else{
+
+        //agregar producto
+        //console.log(PRODUCTO);
+        this._productoService.guardarProducto(PRODUCTO).subscribe(data => {
+        this.toastr.success('El producto fue registrado con exito!', 'Producto Registrado!');
+        this.router.navigate(['/']);
+      }, error => {
+        console.log(error);
+        this.productoForm.reset();
+      })
+    }
+    
+    
 
   
   }
@@ -65,6 +82,7 @@ export class CrearProductoComponent implements OnInit {
           precio: data.precio,
         })
       })
+    
     }
   }
 
